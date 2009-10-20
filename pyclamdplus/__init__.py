@@ -57,7 +57,9 @@ class ClamdConnection(object):
         
         """
         try:
+            self._init_socket()
             self._socket.shutdown(socket.SHUT_RDWR)
+            self._socket.close()
         except socket.error, exc:
             raise ConnectionError("Could not disconnect from Clamd server: %s"
                                   % exc)
