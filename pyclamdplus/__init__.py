@@ -164,23 +164,26 @@ class ClamdConnection(object):
     
     #{ File scanning methods
     
-    def is_infected(self, file):
+    def scan_file(self, file):
         """
-        Is the ``file`` infected?
+        Check if the ``file`` is infected and if so return the virus name.
         
         :param file: The path to the file to be scanned.
         :type file: basestring
         :raises BadTargetError: If ``file`` is not an existing regular file.
         :raises RequestError: If the ``file`` could not be scanned.
-        :return: Whether the ``file`` is infected or not.
-        :rtype: bool
+        :return: The name of the virus.
+        :rtype: ``bool`` or ``None``
         
         """
         _target_must_exist(file)
         if not path.isfile(file):
             raise BadTargetError("Target %s is not a file" % file)
-        infected = len(self._scan(file)) > 0
-        return infected
+        result = self._scan(file)
+        if result:
+            return result.items()[0][1]
+        else:
+            return None
     
     def scan_directory(self, directory):
         """
