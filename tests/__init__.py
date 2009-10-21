@@ -23,7 +23,11 @@ Test suite for Pyclamdplus.
 
 """
 
+from os import path
+
 from nose.tools import eq_
 
-unix_socket = 
+
+_here = path.abspath(path.dirname(__file__))
+VIRUS_FOLDER = path.join(_here, "fixtures", "viruses")
 
