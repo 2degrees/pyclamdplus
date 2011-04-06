@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2009 by 2degrees, Ltd. <http://www.2degreesnetwork.com/>.
+# Copyright (c) 2009, 2011 by 2degrees, Ltd. <http://www.2degreesnetwork.com/>.
 #
 # This file is part of Pyclamdplus.
 #
@@ -19,9 +19,6 @@
 # Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import os
-
-from ez_setup import use_setuptools
-use_setuptools()
 
 from setuptools import setup, find_packages
 
