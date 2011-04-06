@@ -1,0 +1,7 @@
+include README.rst
+include VERSION.txt
+include MANIFEST.in
+include setup.cfg
+
+recursive-include docs/ *
+recursive-exclude tests/ *
