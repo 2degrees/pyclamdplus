@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2009, 2011 by 2degrees, Ltd. <http://www.2degreesnetwork.com/>.
+# Copyright (c) 2009, 2011 by 2degrees, Ltd. <http://dev.2degreesnetwork.com/>.
 #
 # This file is part of Pyclamdplus.
 #
@@ -40,8 +40,8 @@ setup(name="pyclamdplus",
         "Topic :: Security"
         ],
       keywords="clamav clamd pyclamav pyclamd antivirus anti-virus virus",
-      author="Gustavo Narea",
-      author_email="gustavonarea@2degreesnetwork.com",
+      author="2degrees Limited",
+      author_email="2degrees-floss@googlegroups.com",
       license="GNU GPL v2 or later (http://www.gnu.org/licenses/gpl-2.0.html)",
       packages=find_packages(exclude=["tests"]),
       package_data={
