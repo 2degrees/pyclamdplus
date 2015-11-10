@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2009 by 2degrees, Ltd. <http://dev.2degreesnetwork.com/>.
+# Copyright (c) 2009, 2015 by 2degrees, Ltd. <http://dev.2degreesnetwork.com/>.
 # Copyright (c) 2006 by Alexandre Norman <norman@xael.org>.
 #
 # This file is part of Pyclamdplus.
@@ -60,7 +60,7 @@ class ClamdConnection(object):
             self._init_socket()
             self._socket.shutdown(socket.SHUT_RDWR)
             self._socket.close()
-        except socket.error, exc:
+        except socket.error as exc:
             raise ConnectionError("Could not disconnect from Clamd server: %s"
                                   % exc)
     
@@ -132,20 +132,21 @@ class ClamdConnection(object):
         Send ``data`` to the socket and get its response.
         
         :param data: The data to be sent to the socket.
-        :type data: basestring
+        :type data: str
         :param auto_close: Whether the socket should be closed after retrieving
             the data.
         :type auto_close: bool
         :raises pyclamdplus.ConnectionError: If there was a problem.
         :return: The response.
-        :rtype: basestring
+        :rtype: str
         
         """
+        data_encoded = data.encode()
         try:
             self._init_socket()
-            self._socket.send(data)
+            self._socket.send(data_encoded)
             result = self._retrieve_data(auto_close=auto_close)
-        except socket.error, exc:
+        except socket.error as exc:
             raise ConnectionError('Could not send data "%s" to the '
                                   'Clamd server: %s' % (data, exc))
         return result
@@ -162,7 +163,7 @@ class ClamdConnection(object):
         response = self._socket.recv(20000).strip()
         if auto_close:
             self._socket.close()
-        return response
+        return response.decode()
     
     #{ File scanning methods
     
@@ -171,7 +172,7 @@ class ClamdConnection(object):
         Check if the ``file`` is infected and if so return the virus name.
         
         :param file: The path to the file to be scanned.
-        :type file: basestring
+        :type file: str
         :raises BadTargetError: If ``file`` is not an existing regular file.
         :raises RequestError: If the ``file`` could not be scanned.
         :return: The name of the virus.
@@ -183,7 +184,7 @@ class ClamdConnection(object):
             raise BadTargetError("Target %s is not a file" % file)
         result = self._scan(file)
         if result:
-            return result.items()[0][1]
+            return list(result.items())[0][1]
         else:
             return None
     
@@ -192,7 +193,7 @@ class ClamdConnection(object):
         Find the infected files in ``directory``.
         
         :param directory: The directory to be scanned.
-        :type directory: basestring
+        :type directory: str
         :raises BadTargetError: If ``directory`` is not an existing directory.
         :raises RequestError: If the ``directory`` could not be scanned.
         :return: The infected files.
@@ -215,7 +216,7 @@ class ClamdConnection(object):
         
         :param file: The path to the file/directory to be scanned; must be
             an absolute path.
-        :type file: basestring
+        :type file: str
         :param contscan: Whether to scan using the "CONTSCAN" method instead
             of "SCAN".
         :type contscan: bool
@@ -264,7 +265,7 @@ class ClamdNetworkConnection(ClamdConnection):
         Init pyclamd to use Clamd network socket.
         
         :param host: The clamd server address.
-        :type host: basestring
+        :type host: str
         :param port: The clamd server port.
         :type port: int
         :raises pyclamdplus.exc.ConnectionError: If the parameters were not
@@ -272,7 +273,7 @@ class ClamdNetworkConnection(ClamdConnection):
             reason.
         
         """
-        if not isinstance(host, basestring):
+        if not isinstance(host, str):
             raise ConnectionError("Host should be a string, not %s" %
                                   repr(host))
         if not isinstance(port, int):
@@ -295,7 +296,7 @@ class ClamdNetworkConnection(ClamdConnection):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             s.connect((self.host, self.port))
-        except socket.error, exc:
+        except socket.error as exc:
             s.close()
             raise ConnectionError("Could not reach Clamd server on %s:%s: %s" %
                                   (self.host, self.port, exc))
@@ -314,13 +315,13 @@ class ClamdUNIXConnection(ClamdConnection):
         Init pyclamd to use Clamd network socket.
         
         :param filename: The clamd file for local UNIX socket.
-        :type filename: basestring
+        :type filename: str
         :raises pyclamdplus.exc.ConnectionError: If the parameters were not
             correct or if we could not connect to the server for another
             reason.
         
         """
-        if not isinstance(filename, basestring):
+        if not isinstance(filename, str):
             raise ConnectionError("The filename should be a string, not %s" %
                                   repr(filename))
         
@@ -339,7 +340,7 @@ class ClamdUNIXConnection(ClamdConnection):
         s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         try:
             s.connect(self.filename)
-        except socket.error, exc:
+        except socket.error as exc:
             s.close()
             raise ConnectionError("Could not reach Clamd UNIX socket %s: %s" %
                                   (self.filename, exc))

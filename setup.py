@@ -36,7 +36,7 @@ setup(name="pyclamdplus",
         "License :: OSI Approved :: GNU General Public License (GPL)",
         "Natural Language :: English",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 3",
         "Topic :: Security"
         ],
       keywords="clamav clamd pyclamav pyclamd antivirus anti-virus virus",

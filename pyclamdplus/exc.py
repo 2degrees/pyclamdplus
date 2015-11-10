@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2009 by 2degrees, Ltd. <http://dev.2degreesnetwork.com/>.
+# Copyright (c) 2009, 2015 by 2degrees, Ltd. <http://dev.2degreesnetwork.com/>.
 #
 # This file is part of Pyclamdplus.
 #
