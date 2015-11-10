@@ -31,7 +31,7 @@ __all__ = ("ClamdNetworkConnection", "ClamdUNIXConnection",
            "BadTargetError")
 
 
-class ClamdConnection(object):
+class ClamdConnection:
     """
     Base class for Clamd connections.
     
