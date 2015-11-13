@@ -37,6 +37,7 @@ setup(name="pyclamdplus",
         "License :: OSI Approved :: GNU General Public License (GPL)",
         "Natural Language :: English",
         "Operating System :: OS Independent",
+        "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 3",
         "Topic :: Security"
         ],
@@ -49,8 +50,8 @@ setup(name="pyclamdplus",
         '': ['VERSION.txt', 'README.rst'],
         },
       zip_safe=False,
-      tests_require = ["coverage >= 3.0", "nose >= 0.11.0"],
-      install_requires=[],
+      tests_require=["coverage >= 3.0", "nose >= 0.11.0"],
+      install_requires=["six"],
       test_suite="nose.collector",
       )
 

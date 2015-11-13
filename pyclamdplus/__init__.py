@@ -23,15 +23,18 @@ Pythonic interface to the Clamav daemon.
 
 """
 
-from os import path
 import socket
+from os import path
+
+from six import string_types
+
 
 __all__ = ("ClamdNetworkConnection", "ClamdUNIXConnection",
            "PyclamdplusException", "ConnectionError", "RequestError",
            "BadTargetError")
 
 
-class ClamdConnection:
+class ClamdConnection(object):
     """
     Base class for Clamd connections.
     
@@ -273,7 +276,7 @@ class ClamdNetworkConnection(ClamdConnection):
             reason.
         
         """
-        if not isinstance(host, str):
+        if not isinstance(host, string_types):
             raise ConnectionError("Host should be a string, not %s" %
                                   repr(host))
         if not isinstance(port, int):
@@ -321,7 +324,7 @@ class ClamdUNIXConnection(ClamdConnection):
             reason.
         
         """
-        if not isinstance(filename, str):
+        if not isinstance(filename, string_types):
             raise ConnectionError("The filename should be a string, not %s" %
                                   repr(filename))
         
